@@ -14,8 +14,8 @@ export function Footer() {
           © {new Date().getFullYear()} Evolutionary Prophecy. Predicting the future, one branch at a time.
         </div>
         <div className="flex items-center gap-4">
-          <a href="mailto:hello@evolutionary-prophecy.com" className="text-sm text-slate-400 hover:text-white">
-            hello@evolutionary-prophecy.com
+          <a href="mailto:hello@lifelong-growth.com" className="text-sm text-slate-400 hover:text-white">
+            hello@lifelong-growth.com
           </a>
           <button
             onClick={() => setOpen(true)}

@@ -1,7 +1,7 @@
 import { MetadataRoute } from "next";
 import { prisma } from "@/lib/prisma";
 
-const SITE_URL = "https://evolutionary-prophecy.com";
+const SITE_URL = "https://prophet.lifelong-growth.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const topics = await prisma.topic.findMany({ select: { id: true, updatedAt: true } });

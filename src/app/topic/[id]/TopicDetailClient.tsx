@@ -83,7 +83,7 @@ export function TopicDetailClient({ topic: initial }: Props) {
           </span>
           <div className="ml-auto">
             <ShareButton
-              url={`https://evolutionary-prophecy.com/topic/${topic.id}`}
+              url={`https://prophet.lifelong-growth.com/topic/${topic.id}`}
               title={topic.title}
               description={topic.description}
             />

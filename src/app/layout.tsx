@@ -25,11 +25,11 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Evolutionary Prophecy" }],
   creator: "Evolutionary Prophecy",
-  metadataBase: new URL("https://evolutionary-prophecy.com"),
+  metadataBase: new URL("https://prophet.lifelong-growth.com"),
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://evolutionary-prophecy.com",
+    url: "https://prophet.lifelong-growth.com",
     siteName: "Evolutionary Prophecy",
     title: "Evolutionary Prophecy - Predict the Future Through Evolution",
     description:

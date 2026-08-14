@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     openGraph: {
       title: topic.title,
       description: topic.description,
-      url: `https://evolutionary-prophecy.com/topic/${topic.id}`,
+      url: `https://prophet.lifelong-growth.com/topic/${topic.id}`,
     },
     twitter: {
       card: "summary_large_image",

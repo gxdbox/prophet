@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: "/",
       disallow: "/api/",
     },
-    sitemap: "https://evolutionary-prophecy.com/sitemap.xml",
+    sitemap: "https://prophet.lifelong-growth.com/sitemap.xml",
   };
 }

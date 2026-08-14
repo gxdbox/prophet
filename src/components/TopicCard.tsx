@@ -9,7 +9,7 @@ import type { TopicWithOptions } from "@/lib/types";
 
 export function TopicCard({ topic }: { topic: TopicWithOptions }) {
   const category = CATEGORIES.find((c) => c.key === topic.category);
-  const url = `https://evolutionary-prophecy.com/topic/${topic.id}`;
+  const url = `https://prophet.lifelong-growth.com/topic/${topic.id}`;
 
   return (
     <motion.div
