@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  background: linear-gradient(180deg, #0a0a0f 0%, #0d0d1a 50%, #111128 100%);
+  min-height: 100vh;
+  color: #e2e8f0;
+}
+
+@layer components {
+  .card-void {
+    @apply rounded-2xl border border-void-700 bg-void-800/60 p-5 backdrop-blur-sm transition-all hover:border-neon-500/40 hover:shadow-[0_0_20px_rgba(74,222,128,0.12)];
+  }
+
+  .btn-primary {
+    @apply rounded-xl bg-neon-600 px-4 py-2 font-medium text-white shadow-[0_0_16px_rgba(34,197,94,0.35)] transition-all hover:bg-neon-500 hover:shadow-[0_0_24px_rgba(34,197,94,0.55)] active:scale-95;
+  }
+
+  .btn-secondary {
+    @apply rounded-xl border border-void-700 bg-void-800 px-4 py-2 font-medium text-slate-300 transition-all hover:border-bio-500/50 hover:text-bio-400 active:scale-95;
+  }
+
+  .input-void {
+    @apply rounded-xl border border-void-700 bg-void-900/80 px-4 py-2.5 text-sm text-slate-100 outline-none transition-all placeholder:text-slate-500 focus:border-neon-500 focus:ring-1 focus:ring-neon-500/40;
+  }
+
+  .tag-green {
+    @apply inline-flex items-center rounded-full bg-neon-500/10 px-2.5 py-0.5 text-xs font-medium text-neon-400 ring-1 ring-inset ring-neon-500/20;
+  }
+
+  .tag-blue {
+    @apply inline-flex items-center rounded-full bg-bio-500/10 px-2.5 py-0.5 text-xs font-medium text-bio-400 ring-1 ring-inset ring-bio-500/20;
+  }
+
+  .tag-purple {
+    @apply inline-flex items-center rounded-full bg-cell-500/10 px-2.5 py-0.5 text-xs font-medium text-cell-400 ring-1 ring-inset ring-cell-500/20;
+  }
+
+  .tag-amber {
+    @apply inline-flex items-center rounded-full bg-amber-500/10 px-2.5 py-0.5 text-xs font-medium text-amber-400 ring-1 ring-inset ring-amber-500/20;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0a0a0f;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1a1a3e;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #22c55e;
+}
+
+::selection {
+  background: rgba(34, 197, 94, 0.3);
+  color: #fff;
+}
