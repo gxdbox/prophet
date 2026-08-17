@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:standalone": "next build && cp -R .next/static .next/standalone/.next/",
     "start": "next start",
     "lint": "next lint",
     "db:push": "npx prisma db push",
