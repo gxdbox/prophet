@@ -14,7 +14,16 @@ interface Props {
 
 export function TopicDetailClient({ topic: initial }: Props) {
   const [topic, setTopic] = useState<TopicWithOptions>(initial);
-  const [votedOptionId, setVotedOptionId] = useState<string | null>(null);
+  const [votedOptionId, setVotedOptionId] = useState<string | null>(() => {
+    if (typeof document === "undefined") return null;
+    try {
+      const match = document.cookie.match(new RegExp("(?:^|; )evp_votes=([^;]*)"));
+      const votes = match ? JSON.parse(decodeURIComponent(match[1])) : {};
+      return votes[initial.id] ?? null;
+    } catch {
+      return null;
+    }
+  });
   const [adding, setAdding] = useState(false);
   const [newContent, setNewContent] = useState("");
   const [newDesc, setNewDesc] = useState("");
@@ -33,9 +42,15 @@ export function TopicDetailClient({ topic: initial }: Props) {
     setTopic((prev) => ({
       ...prev,
       voteCount: data.topic.voteCount,
-      options: prev.options.map((o) =>
-        o.id === data.option.id ? { ...o, voteCount: data.option.voteCount } : o
-      ),
+      options: prev.options.map((o) => {
+        if (o.id === data.option.id) {
+          return { ...o, voteCount: data.option.voteCount };
+        }
+        if (data.previousOption && o.id === data.previousOption.id) {
+          return { ...o, voteCount: data.previousOption.voteCount };
+        }
+        return o;
+      }),
     }));
     setVotedOptionId(data.voted);
   }
