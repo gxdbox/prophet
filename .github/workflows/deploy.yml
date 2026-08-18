@@ -1,0 +1,52 @@
+name: Deploy Prophet
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Apply database schema
+        run: npx prisma db push --accept-data-loss
+        env:
+          DATABASE_URL: file:${{ github.workspace }}/prisma/dev.db
+
+      - name: Build standalone
+        run: npm run build:standalone
+        env:
+          DATABASE_URL: file:${{ github.workspace }}/prisma/dev.db
+
+      - name: Restart Prophet service
+        run: |
+          launchctl unload ~/Library/LaunchAgents/com.pony.prophet.plist || true
+          launchctl load ~/Library/LaunchAgents/com.pony.prophet.plist
+
+      - name: Health check
+        run: |
+          for i in {1..30}; do
+            if curl -sf http://localhost:3460 > /dev/null; then
+              echo "Prophet is up on port 3460"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "Health check failed"
+          exit 1
