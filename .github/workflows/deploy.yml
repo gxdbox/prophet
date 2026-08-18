@@ -8,41 +8,37 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
-    env:
-      http_proxy: http://127.0.0.1:7897
-      https_proxy: http://127.0.0.1:7897
-      no_proxy: localhost,127.0.0.1,::1
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
+      - name: Pull latest code
+        run: |
+          cd /Users/pony/Documents/code/evolutionary-prophecy
+          git fetch origin main
+          git reset --hard origin/main
 
       - name: Install dependencies
-        run: npm ci
+        run: |
+          cd /Users/pony/Documents/code/evolutionary-prophecy
+          npm ci
 
       - name: Generate Prisma client
-        run: npx prisma generate
+        run: |
+          cd /Users/pony/Documents/code/evolutionary-prophecy
+          npx prisma generate
 
       - name: Apply database schema
-        run: npx prisma db push --accept-data-loss
-        env:
-          DATABASE_URL: file:${{ github.workspace }}/prisma/dev.db
+        run: |
+          cd /Users/pony/Documents/code/evolutionary-prophecy
+          DATABASE_URL="file:/Users/pony/Documents/code/evolutionary-prophecy/prisma/dev.db" npx prisma db push --accept-data-loss
 
       - name: Build standalone
-        run: npm run build:standalone
-        env:
-          DATABASE_URL: file:${{ github.workspace }}/prisma/dev.db
+        run: |
+          cd /Users/pony/Documents/code/evolutionary-prophecy
+          DATABASE_URL="file:/Users/pony/Documents/code/evolutionary-prophecy/prisma/dev.db" npm run build:standalone
 
       - name: Restart Prophet service
         run: |
-          rsync -a --delete _work/prophet/prophet/.next/standalone/ /Users/pony/Documents/code/evolutionary-prophecy/.next/standalone/
-          launchctl unload ~/Library/LaunchAgents/com.pony.prophet.plist || true
-          launchctl load ~/Library/LaunchAgents/com.pony.prophet.plist
+          launchctl unload /Users/pony/Library/LaunchAgents/com.pony.prophet.plist || true
+          launchctl load /Users/pony/Library/LaunchAgents/com.pony.prophet.plist
 
       - name: Health check
         run: |
