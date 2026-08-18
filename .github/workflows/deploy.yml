@@ -40,6 +40,7 @@ jobs:
 
       - name: Restart Prophet service
         run: |
+          rsync -a --delete _work/prophet/prophet/.next/standalone/ /Users/pony/Documents/code/evolutionary-prophecy/.next/standalone/
           launchctl unload ~/Library/LaunchAgents/com.pony.prophet.plist || true
           launchctl load ~/Library/LaunchAgents/com.pony.prophet.plist
 
