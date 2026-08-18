@@ -17,11 +17,17 @@ jobs:
       no_proxy: localhost,127.0.0.1,::1
     steps:
       - name: Pull latest code
+        env:
+          HTTP_PROXY: http://127.0.0.1:7897
+          HTTPS_PROXY: http://127.0.0.1:7897
         run: |
           git reset --hard
           git pull origin main
 
       - name: Install dependencies
+        env:
+          HTTP_PROXY: http://127.0.0.1:7897
+          HTTPS_PROXY: http://127.0.0.1:7897
         run: npm ci
 
       - name: Generate Prisma client
