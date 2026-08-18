@@ -8,32 +8,33 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
+    defaults:
+      run:
+        working-directory: /Users/pony/Documents/code/evolutionary-prophecy
+    env:
+      http_proxy: http://127.0.0.1:7897
+      https_proxy: http://127.0.0.1:7897
+      HTTP_PROXY: http://127.0.0.1:7897
+      HTTPS_PROXY: http://127.0.0.1:7897
+      no_proxy: localhost,127.0.0.1,::1
+      NO_PROXY: localhost,127.0.0.1,::1
     steps:
       - name: Pull latest code
         run: |
-          cd /Users/pony/Documents/code/evolutionary-prophecy
-          git fetch origin main
-          git reset --hard origin/main
+          git reset --hard
+          git pull origin main
 
       - name: Install dependencies
-        run: |
-          cd /Users/pony/Documents/code/evolutionary-prophecy
-          npm ci
+        run: npm ci
 
       - name: Generate Prisma client
-        run: |
-          cd /Users/pony/Documents/code/evolutionary-prophecy
-          npx prisma generate
+        run: npx prisma generate
 
       - name: Apply database schema
-        run: |
-          cd /Users/pony/Documents/code/evolutionary-prophecy
-          DATABASE_URL="file:/Users/pony/Documents/code/evolutionary-prophecy/prisma/dev.db" npx prisma db push --accept-data-loss
+        run: DATABASE_URL="file:/Users/pony/Documents/code/evolutionary-prophecy/prisma/dev.db" npx prisma db push --accept-data-loss
 
       - name: Build standalone
-        run: |
-          cd /Users/pony/Documents/code/evolutionary-prophecy
-          DATABASE_URL="file:/Users/pony/Documents/code/evolutionary-prophecy/prisma/dev.db" npm run build:standalone
+        run: DATABASE_URL="file:/Users/pony/Documents/code/evolutionary-prophecy/prisma/dev.db" npm run build:standalone
 
       - name: Restart Prophet service
         run: |
